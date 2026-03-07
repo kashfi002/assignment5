@@ -1,0 +1,16 @@
+
+###card div
+<div class="shadow-md rounded-md border-t-2 border-green-400 p-[10px] w-[256px]">
+    <div class="flex justify-between">
+      <img src="assets/Open-Status.png" alt="">
+      <div class="badge badge-soft badge-warning">Warning</div>
+    </div>
+    <h4 class="font-semibold">Fix navigation menu on mobile devices</h4>
+    <p>The navigation menu doesn't collapse properly on mobile devices...</p>
+    <div class="badge badge-soft badge-error">Error</div>
+    <div class="badge badge-soft badge-warning">Warning</div>
+    <hr>
+    <p class="text-gray-500"># 1 by Someone</p>
+    <p class="text-gray-500">12/12/2022</p>
+  </div>
+
