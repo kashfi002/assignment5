@@ -3,7 +3,9 @@ const LoadingSpinner=document.getElementById("loadingSpinner");
 const Navbar=document.getElementById("navbar");
 const IssuesType=document.getElementById("issues-type");
 const IssuesCounter=document.getElementById("issues-counter");
-const MainPart=document.getElementById("main-part")
+const MainPart=document.getElementById("main-part");
+const TotalIssueCounter=document.getElementById("totalIssue")
+let allIssues=[];
 const showLoading=()=>{
     LoadingSpinner.classList.remove("hidden")
     LoadingSpinner.classList.add("flex");
@@ -13,14 +15,19 @@ const hideLoading=()=>{
      LoadingSpinner.classList.add("hidden");
      MainPart.classList.remove("hidden");
 }
-
+const showLabels=(array)=>{
+    const LabelNames=array.map((el)=>`
+    <span class="badge badge-outline text-[10px] font-bold uppercase p-3">${el}</span>
+    `);
+   return LabelNames.join(" ");
+}
 async function LoadIssues() {
     showLoading();
     const res=await fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues")
     const data=await res.json();
+    allIssues=data.data;
     hideLoading();
-    console.log(data);
-     DisplayIssues(data.data);
+     DisplayIssues(allIssues);
 }
 const DisplayIssues=(issues)=>{
     issues.forEach(element => {
@@ -53,8 +60,7 @@ const DisplayIssues=(issues)=>{
     <h4 class="font-semibold">${element.title}</h4>
     <p class="line-clamp-2">${element.description}</p>
     <div class="my-[10px]">
-    <div class="badge badge-soft badge-error">Error</div>
-    <div class="badge badge-soft badge-warning">Bug found</div>
+    <div>${showLabels(element.labels)}</div>
     </div>
     <hr>
     <p class="text-gray-500"># ${element.id} by ${element.author}</p>
@@ -63,5 +69,7 @@ const DisplayIssues=(issues)=>{
         `
         IssueContainer.appendChild(issueCard);
     });
+
+    TotalIssueCounter.innerText=issues.length;
 }
 LoadIssues();
