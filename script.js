@@ -110,7 +110,48 @@ const toggleButton=(btnType)=>{
         DisplayIssues(filtered);
     }
 }
-const LoadButton=(id)=>{
+const LoadModal=(id)=>{
+    url=`https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`;
+    fetch(url)
+    .then(res=>res.json())
+    .then(data=>{
+        DisplayModal(data.data);
+    })
+}
+const DisplayModal=(modal)=>{
+    const modalBox=document.getElementById("modal_container");
+    modalBox.innerHTML=`
+    <h3 class="text-lg font-bold">${modal.title}</h3>
+    <div class="flex gap-2">
+      <div class="badge badge-success">${modal.status}</div>
+      <p class="text-gray-500">
+        <span class="w-1.5 h-1.5 bg-gray-500 rounded-full"></span>
+        Opened by ${modal.author}</p>
+      <p class="text-gray-500">
+         <span class="w-1.5 h-1.5 bg-gray-500 rounded-full"></span>
+        ${modal.updatedAt}</p>
+    </div>
+     <div>${showLabels(modal.labels)}</div>
+    <p class="text-gray-500">Some description</p>
+    <div class="bg-gray-100 shadow-md mx-auto flex px-[30px] py-[10px] rounded-md gap-[60px]">
+      <div class="">
+        <p class="text-grey-500">Asignee:</p>
+        <p class="font-bold">${modal.assignee? modal.assignee: "no one assigned"}</p>
+      </div>
+      <div>
+        <p class="text-grey-500">Priority</p>
+        <div class="badge badge-error">${modal.priority}</div>
+      </div>
+    </div>
+    <div class="modal-action">
+      <form method="dialog">
+        <!-- if there is a button in form, it will close the modal -->
+        <button class="btn btn-primary">Close</button>
+      </form>
+    </div>
+
+    `
+    document.getElementById("my_modal").showModal();
 
 }
 AllBtn.addEventListener("click",()=>{

@@ -14,3 +14,33 @@
     <p class="text-gray-500">12/12/2022</p>
   </div>
 
+
+ <h3 class="text-lg font-bold">Title</h3>
+    <div class="flex gap-2">
+      <div class="badge badge-success">Opened</div>
+      <p class="text-gray-500">
+        <span class="w-1.5 h-1.5 bg-gray-500 rounded-full"></span>
+        Opened by someone</p>
+      <p class="text-gray-500">
+         <span class="w-1.5 h-1.5 bg-gray-500 rounded-full"></span>
+        Some date</p>
+    </div>
+    <button>badge 1</button>
+    <button>badge 2</button>
+    <p class="text-gray-500">Some description</p>
+    <div class="bg-gray-100 shadow-md mx-auto flex px-[30px] py-[10px] rounded-md gap-[60px]">
+      <div class="">
+        <p class="text-grey-500">Asignee:</p>
+        <p class="font-bold">Fahim Ahmed</p>
+      </div>
+      <div>
+        <p class="text-grey-500">Priority</p>
+        <div class="badge badge-error">High</div>
+      </div>
+    </div>
+    <div class="modal-action">
+      <form method="dialog">
+        <!-- if there is a button in form, it will close the modal -->
+        <button class="btn btn-primary">Close</button>
+      </form>
+    </div>

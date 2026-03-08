@@ -88,36 +88,8 @@
   <!-- Open the modal using ID.showModal() method -->
 <!-- <button class="btn" onclick="my_modal.showModal()">open modal</button> -->
 <dialog id="my_modal" class="modal modal-bottom sm:modal-middle">
-  <div class="modal-box space-y-4">
-    <h3 class="text-lg font-bold">Title</h3>
-    <div class="flex gap-2">
-      <div class="badge badge-success">Opened</div>
-      <p class="text-gray-500">
-        <span class="w-1.5 h-1.5 bg-gray-500 rounded-full"></span>
-        Opened by someone</p>
-      <p class="text-gray-500">
-         <span class="w-1.5 h-1.5 bg-gray-500 rounded-full"></span>
-        Some date</p>
-    </div>
-    <button>badge 1</button>
-    <button>badge 2</button>
-    <p class="text-gray-500">Some description</p>
-    <div class="bg-gray-100 shadow-md mx-auto flex px-[30px] py-[10px] rounded-md gap-[60px]">
-      <div class="">
-        <p class="text-grey-500">Asignee:</p>
-        <p class="font-bold">Fahim Ahmed</p>
-      </div>
-      <div>
-        <p class="text-grey-500">Priority</p>
-        <div class="badge badge-error">High</div>
-      </div>
-    </div>
-    <div class="modal-action">
-      <form method="dialog">
-        <!-- if there is a button in form, it will close the modal -->
-        <button class="btn btn-primary">Close</button>
-      </form>
-    </div>
+  <div id="modal_container" class="modal-box space-y-4">
+   
   </div>
 </dialog>
  </main>
