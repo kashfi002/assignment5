@@ -98,7 +98,7 @@ const DisplayIssues=(issues)=>{
     <div>${showLabels(element.labels)}</div>
     </div>
     <hr>
-    <p class="text-gray-500"># ${element.id} by ${element.author}</p>
+    <p class="text-gray-500"># ${element.id} by ${element.author.replace("_"," ").toUpperCase()}</p>
     <p class="text-gray-500">${element.createdAt.split('T')[0]}</p>
   </div>
         `
@@ -134,23 +134,27 @@ const LoadModal=(id)=>{
 }
 const DisplayModal=(modal)=>{
     const modalBox=document.getElementById("modal_container");
+     let badgeColor="bg-green-400"
+    if(modal.status==='closed'){
+    badgeColor="bg-purple-500"
+}
     modalBox.innerHTML=`
     <h3 class="text-lg font-bold">${modal.title}</h3>
     <div class="flex gap-2">
-      <div class="badge badge-success">${modal.status}</div>
+      <div class="badge badge-md ${badgeColor} text-white">${modal.status}</div>
       <p class="text-gray-500">
         <span class="w-1.5 h-1.5 bg-gray-500 rounded-full"></span>
-        Opened by ${modal.author}</p>
+         • Opened by ${modal.author.replace("_"," ").toUpperCase()}</p>
       <p class="text-gray-500">
          <span class="w-1.5 h-1.5 bg-gray-500 rounded-full"></span>
-        ${modal.updatedAt.split('T')[0]}</p>
+         • ${modal.updatedAt.split('T')[0]}</p>
     </div>
      <div>${showLabels(modal.labels)}</div>
     <p class="text-gray-500">Some description</p>
     <div class="bg-gray-100 shadow-md mx-auto flex px-[30px] py-[10px] rounded-md gap-[60px]">
       <div class="">
         <p class="text-grey-500">Asignee:</p>
-        <p class="font-bold">${modal.assignee? modal.assignee: "no one assigned"}</p>
+        <p class="font-bold">${modal.assignee? modal.assignee.replace("_"," ").toUpperCase(): "no one assigned"}</p>
       </div>
       <div>
         <p class="text-grey-500">Priority</p>
