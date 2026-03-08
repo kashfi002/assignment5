@@ -11,6 +11,7 @@ const TotalIssueCounter=document.getElementById("totalIssue");
 const AllBtn=document.getElementById("btn-all");
 const OpenBtn=document.getElementById("btn-open");
 const ClosedBtn=document.getElementById("btn-closed");
+const SearchInput=document.getElementById("search-box");
 let allIssues=[];
 const LogIn=()=>{
     if(ID.value==="admin" && Password.value==="admin123"){
@@ -33,9 +34,22 @@ const hideLoading=()=>{
      MainPart.classList.remove("hidden");
 }
 const showLabels=(array)=>{
-    const LabelNames=array.map((el)=>`
-    <span class="badge badge-outline text-[10px] font-bold uppercase p-3">${el}</span>
-    `);
+    const LabelNames=array.map((el)=>{
+    let badgeType="badge-error"
+    if(el==="help wanted"){
+    badgeType="badge-warning"
+    }
+    else if(el==="enhancement"){
+    badgeType="badge-success"
+    }
+    else if(el==="first good issue"){
+    badgeType="badge-info"
+    }
+    else if(el==="documentation"){
+    badgeType="badge-primary"
+    }
+    return `<span class="badge badge-soft ${badgeType} text-[10px] font-bold uppercase p-3">${el}</span>`
+});
    return LabelNames.join(" ");
 }
 async function LoadIssues() {
@@ -85,7 +99,7 @@ const DisplayIssues=(issues)=>{
     </div>
     <hr>
     <p class="text-gray-500"># ${element.id} by ${element.author}</p>
-    <p class="text-gray-500">${element.createdAt}</p>
+    <p class="text-gray-500">${element.createdAt.split('T')[0]}</p>
   </div>
         `
         IssueContainer.appendChild(issueCard);
@@ -129,7 +143,7 @@ const DisplayModal=(modal)=>{
         Opened by ${modal.author}</p>
       <p class="text-gray-500">
          <span class="w-1.5 h-1.5 bg-gray-500 rounded-full"></span>
-        ${modal.updatedAt}</p>
+        ${modal.updatedAt.split('T')[0]}</p>
     </div>
      <div>${showLabels(modal.labels)}</div>
     <p class="text-gray-500">Some description</p>
@@ -152,6 +166,30 @@ const DisplayModal=(modal)=>{
 
     `
     document.getElementById("my_modal").showModal();
+
+}
+SearchInput.addEventListener("input",(event)=>{
+    const inputTxt=event.target.value.trim();
+    if(inputTxt.length>0){
+        SearchBox(inputTxt);
+    }
+    else{
+        DisplayIssues(allIssues);
+    }
+})
+const SearchBox=(inputTxt)=>{
+    url=` https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${inputTxt}`;
+    fetch(url)
+    .then(res=>res.json())
+    .then(data=>{
+        if(data.data){
+        DisplayIssues(data.data)
+        }
+        })
+            .catch(error=>{
+                console.error("error found",error);
+            
+    })
 
 }
 AllBtn.addEventListener("click",()=>{
