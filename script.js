@@ -1,11 +1,26 @@
+const LogInSec=document.getElementById("login");
+const ID=document.getElementById("user");
+const Password=document.getElementById("pass");
 const IssueContainer=document.getElementById("issue-card-container");
 const LoadingSpinner=document.getElementById("loadingSpinner");
 const Navbar=document.getElementById("navbar");
 const IssuesType=document.getElementById("issues-type");
 const IssuesCounter=document.getElementById("issues-counter");
 const MainPart=document.getElementById("main-part");
-const TotalIssueCounter=document.getElementById("totalIssue")
+const TotalIssueCounter=document.getElementById("totalIssue");
+const AllBtn=document.getElementById("btn-all");
+const OpenBtn=document.getElementById("btn-open");
+const ClosedBtn=document.getElementById("btn-closed");
 let allIssues=[];
+const LogIn=()=>{
+    if(ID.value==="admin" && Password.value==="admin123"){
+         LogInSec.classList.add("hidden");
+         MainPart.classList.remove("hidden");
+    }
+    else{
+        alert("Invalid Credentials");
+    }
+}
 const showLoading=()=>{
     LoadingSpinner.classList.remove("hidden")
     LoadingSpinner.classList.add("flex");
@@ -30,6 +45,7 @@ async function LoadIssues() {
      DisplayIssues(allIssues);
 }
 const DisplayIssues=(issues)=>{
+     IssueContainer.innerHTML= "";
     issues.forEach(element => {
             let bordercolor="border-green-400";
             if(element.status==='closed'){
@@ -72,4 +88,30 @@ const DisplayIssues=(issues)=>{
 
     TotalIssueCounter.innerText=issues.length;
 }
+const allButtons=document.querySelectorAll(".filter-btn");
+const toggleButton=(btnType)=>{
+    allButtons.forEach(btn=>{
+        btn.classList.remove("btn-primary");
+        btn.classList.add("btn-outline");
+    })
+    const activeBtn=document.getElementById(`btn-${btnType}`);
+    activeBtn.classList.remove("btn-outline");
+    activeBtn.classList.add("btn-primary");
+    if(btnType=='all'){
+        DisplayIssues(allIssues);
+    }
+    else{
+        const filtered=allIssues.filter(issue=>issue.status===btnType);
+        DisplayIssues(filtered);
+    }
+}
+AllBtn.addEventListener("click",()=>{
+    toggleButton("all")
+})
+OpenBtn.addEventListener("click",()=>{
+    toggleButton("open")
+})
+ClosedBtn.addEventListener("click",()=>{
+    toggleButton("closed");
+})
 LoadIssues();

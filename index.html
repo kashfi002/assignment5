@@ -10,7 +10,7 @@
 </head>
 <body>
     <!-- Login Section -->
-    <section id="login" class=" hidden flex-cols items-center mx-auto">
+    <section id="login" class=" flex-cols items-center mx-auto">
         <div class="login-container w-full px-6">
         <fieldset class="fieldset bg-base-200 border-base-300 rounded-box max-w-md mx-auto border p-4 shadow-md my-[60px]">
             <div class="login-top items-center text-center">
@@ -20,13 +20,13 @@
  </div>
 
   <label class="label font-bold">Username</label>
-  <input type="text" class="input rounded-sm w-full" placeholder="Enter Username"  />
+  <input type="text" id="user" class="input rounded-sm w-full" placeholder="Enter Username"  />
   <p class="text-[#4A00FF]">Default: admin</p>
 
   <label class="label font-bold">Password</label>
-  <input type="password" class="input rounded-sm w-full" placeholder="Password" />
+  <input type="password" id="pass" class="input rounded-sm w-full" placeholder="Password" />
   <p class="text-[#4A00FF]">Default: admin123</p>
-  <button class="btn btn-primary mt-4 rounded-sm">Login</button>
+  <button class="btn btn-primary mt-4 rounded-sm" onclick="LogIn()">Login</button>
   <div class="flex w-full flex-col">
   <div class="divider">OR</div>
 </div>
@@ -43,7 +43,7 @@
                     <span class="loading loading-spinner loading-xl"></span>
                     <span class="text-gray-400">loading.....</span>
             </div>
-<main id="main-part">
+<main id="main-part" class="hidden">
     <!-- Navbar -->
      <div id="navbar"class="flex mx-auto py-[20px] bg-base-100 shadow-sm px-[40px]">
   <div class="flex-1 flex items-center gap-2">
@@ -60,9 +60,9 @@
 </div>
 <!-- Issue types -->
  <div id="issues-type" class="w-[80%] mx-auto mt-[40px] shadow-md p-[20px] rounded-md">
-  <button class="btn btn-primary">All</button>
-  <button class="btn btn-outline">Open</button>
-  <button class="btn btn-outline">Closed</button>
+  <button id="btn-all" class="filter-btn btn btn-primary">All</button>
+  <button id="btn-open" class="filter-btn btn btn-outline">Open</button>
+  <button id="btn-closed" class="filter-btn btn btn-outline">Closed</button>
  </div>
  <!-- Issue Counter -->
  <div id="issues-counter" class="flex justify-between w-[80%] mx-auto shadow-md rounded-md mt-[40px] p-[20px]">
