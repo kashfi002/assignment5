@@ -16,6 +16,7 @@ const LogIn=()=>{
     if(ID.value==="admin" && Password.value==="admin123"){
          LogInSec.classList.add("hidden");
          MainPart.classList.remove("hidden");
+         LoadIssues();
     }
     else{
         alert("Invalid Credentials");
@@ -28,6 +29,7 @@ const showLoading=()=>{
 }
 const hideLoading=()=>{
      LoadingSpinner.classList.add("hidden");
+     LoadingSpinner.classList.remove("flex");
      MainPart.classList.remove("hidden");
 }
 const showLabels=(array)=>{
@@ -67,7 +69,10 @@ const DisplayIssues=(issues)=>{
             }
     
         const issueCard=document.createElement("div");
-        issueCard.innerHTML=`
+        issueCard.onclick=()=>{
+            LoadModal(element.id);
+        };
+       issueCard.innerHTML=`
         <div class="shadow-md rounded-md border-t-4 ${bordercolor} p-[10px]">
     <div class="flex justify-between">
       <img src="${statusImg}" alt="">
@@ -105,6 +110,9 @@ const toggleButton=(btnType)=>{
         DisplayIssues(filtered);
     }
 }
+const LoadButton=(id)=>{
+
+}
 AllBtn.addEventListener("click",()=>{
     toggleButton("all")
 })
@@ -114,4 +122,3 @@ OpenBtn.addEventListener("click",()=>{
 ClosedBtn.addEventListener("click",()=>{
     toggleButton("closed");
 })
-LoadIssues();
