@@ -39,7 +39,7 @@ const hideLoading=()=>{
 // to show the labels array
 const showLabels=(array)=>{
     const LabelNames=array.map((el)=>{
-    let badgeType="badge-error"
+    let badgeType="badge-error";
     if(el==="help wanted"){
     badgeType="badge-warning"
     }
@@ -169,7 +169,7 @@ const DisplayModal=(modal)=>{
          • ${modal.updatedAt.split('T')[0]}</p>
     </div>
      <div>${showLabels(modal.labels)}</div>
-    <p class="text-gray-500">Some description</p>
+    <p class="text-gray-500">${modal.description}</p>
     <div class="bg-gray-100 shadow-md mx-auto flex px-[30px] py-[10px] rounded-md gap-[60px]">
       <div class="">
         <p class="text-grey-500">Asignee:</p>
