@@ -13,6 +13,7 @@ const OpenBtn=document.getElementById("btn-open");
 const ClosedBtn=document.getElementById("btn-closed");
 const SearchInput=document.getElementById("search-box");
 let allIssues=[];
+// Login section logic
 const LogIn=()=>{
     if(ID.value==="admin" && Password.value==="admin123"){
          LogInSec.classList.add("hidden");
@@ -23,16 +24,19 @@ const LogIn=()=>{
         alert("Invalid Credentials");
     }
 }
+//shows loading spinner while the API is being fetched
 const showLoading=()=>{
     LoadingSpinner.classList.remove("hidden")
     LoadingSpinner.classList.add("flex");
     MainPart.classList.add("hidden");
 }
+//hide loading spinner when API is fetched
 const hideLoading=()=>{
      LoadingSpinner.classList.add("hidden");
      LoadingSpinner.classList.remove("flex");
      MainPart.classList.remove("hidden");
 }
+// to show the labels array
 const showLabels=(array)=>{
     const LabelNames=array.map((el)=>{
     let badgeType="badge-error"
@@ -52,6 +56,7 @@ const showLabels=(array)=>{
 });
    return LabelNames.join(" ");
 }
+// Loads the issues
 async function LoadIssues() {
     showLoading();
     const res=await fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues")
@@ -60,6 +65,7 @@ async function LoadIssues() {
     hideLoading();
      DisplayIssues(allIssues);
 }
+// display issue function to show all the issue card
 const DisplayIssues=(issues)=>{
      IssueContainer.innerHTML= "";
     issues.forEach(element => {
@@ -105,9 +111,9 @@ const DisplayIssues=(issues)=>{
         IssueContainer.appendChild(issueCard);
     });
 
-    TotalIssueCounter.innerText=issues.length;
+    TotalIssueCounter.innerText=issues.length; //Loads the issue counter on top
 }
-const allButtons=document.querySelectorAll(".filter-btn");
+const allButtons=document.querySelectorAll(".filter-btn");//all the buttons
 const toggleButton=(btnType)=>{
     allButtons.forEach(btn=>{
         btn.classList.remove("btn-primary");
@@ -120,10 +126,23 @@ const toggleButton=(btnType)=>{
         DisplayIssues(allIssues);
     }
     else{
-        const filtered=allIssues.filter(issue=>issue.status===btnType);
+        const filtered=allIssues.filter(issue=>issue.status===btnType); //filtering out other button types from all issues
         DisplayIssues(filtered);
     }
 }
+// adding events to the buttons
+AllBtn.addEventListener("click",()=>{
+    toggleButton("all")
+})
+OpenBtn.addEventListener("click",()=>{
+    toggleButton("open")
+})
+ClosedBtn.addEventListener("click",()=>{
+    toggleButton("closed");
+})
+
+
+// Shows the modal
 const LoadModal=(id)=>{
     url=`https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`;
     fetch(url)
@@ -132,6 +151,8 @@ const LoadModal=(id)=>{
         DisplayModal(data.data);
     })
 }
+
+// display and design the modal
 const DisplayModal=(modal)=>{
     const modalBox=document.getElementById("modal_container");
      let badgeColor="bg-green-400"
@@ -143,10 +164,8 @@ const DisplayModal=(modal)=>{
     <div class="flex gap-2">
       <div class="badge badge-md ${badgeColor} text-white">${modal.status}</div>
       <p class="text-gray-500">
-        <span class="w-1.5 h-1.5 bg-gray-500 rounded-full"></span>
          • Opened by ${modal.author.replace("_"," ").toUpperCase()}</p>
       <p class="text-gray-500">
-         <span class="w-1.5 h-1.5 bg-gray-500 rounded-full"></span>
          • ${modal.updatedAt.split('T')[0]}</p>
     </div>
      <div>${showLabels(modal.labels)}</div>
@@ -172,15 +191,17 @@ const DisplayModal=(modal)=>{
     document.getElementById("my_modal").showModal();
 
 }
+// adds an event in searchbox when there is an input, takes the value of the input
 SearchInput.addEventListener("input",(event)=>{
     const inputTxt=event.target.value.trim();
     if(inputTxt.length>0){
         SearchBox(inputTxt);
     }
     else{
-        DisplayIssues(allIssues);
+      DisplayIssues(allIssues);
     }
 })
+//loads issue card based on the input value
 const SearchBox=(inputTxt)=>{
     url=` https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${inputTxt}`;
     fetch(url)
@@ -189,19 +210,5 @@ const SearchBox=(inputTxt)=>{
         if(data.data){
         DisplayIssues(data.data)
         }
-        })
-            .catch(error=>{
-                console.error("error found",error);
-            
-    })
-
+        })        
 }
-AllBtn.addEventListener("click",()=>{
-    toggleButton("all")
-})
-OpenBtn.addEventListener("click",()=>{
-    toggleButton("open")
-})
-ClosedBtn.addEventListener("click",()=>{
-    toggleButton("closed");
-})
